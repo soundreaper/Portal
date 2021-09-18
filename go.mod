@@ -1,4 +1,4 @@
-module github.com/soundreaper/Portal
+module github.com/soundreaper/portal
 
 go 1.16
 
