@@ -51,7 +51,7 @@ func (u *UserStore) AppendImage(id string, image Image) (*User, *Image, error) {
 		return &User{}, &Image{}, nil
 	}
 
-	err = u.db.Model(&user).Association("Receipts").Append(&image)
+	err = u.db.Model(&user).Association("Images").Append(&image)
 	if err != nil {
 		log.Println("user: error getting images for user. err: ", err)
 	}
