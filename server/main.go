@@ -1,9 +1,13 @@
 package main
 
-import "github.com/labstack/echo"
+import (
+	"github.com/soundreaper/portal/server"
+)
 
 func main() {
-	e := echo.New()
+	// create a server with the default db connection
+	s := server.NewServer(nil)
 
-	e.GET()
+	// start the server on port :8080
+	s.Start(":8080")
 }
