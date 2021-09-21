@@ -1,13 +1,12 @@
 version: '3'
 services:
-  db:
-    image: mysql:latest
+  postgres:
+    image: postgres:latest
+    restart: unless-stopped
+    container_name: postgres
     ports:
-      - 3305:3305
+      - 5432:5432
     environment:
-      MYSQL_ROOT_HOST: "localhost"
-      MYSQL_ROOT_PASSWORD: "dbrootpass"
-      MYSQL_DATABASE: "db_portal"
-      MYSQL_USER: "admin"
-      MYSQL_PASSWORD: "APowerfulPassword1234"
-    restart: always
+      POSTGRE_DB: portal
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
