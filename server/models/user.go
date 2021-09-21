@@ -79,7 +79,7 @@ func (u *UserStore) GetByID(id string) (*User, error) {
 
 	// get user image relations
 	user.Images = []Image{}
-	err = u.db.Model(&user).Association("Receipts").Find(&user.Images)
+	err = u.db.Model(&user).Association("Images").Find(&user.Images)
 	if err != nil {
 		log.Println("user: error getting images for user. err: ", err)
 		return &User{}, nil
