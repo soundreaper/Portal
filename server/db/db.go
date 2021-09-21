@@ -18,7 +18,7 @@ func Connect() *gorm.DB {
 	database := getConnection(dbConfig)
 
 	// migrate our models
-	err := database.AutoMigrate(models.Image{})
+	err := database.AutoMigrate(models.User{}, models.Image{})
 	if err != nil {
 		log.Fatal("db: error migrating models. err: ", err)
 	}
