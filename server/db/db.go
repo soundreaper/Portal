@@ -2,20 +2,38 @@ package db
 
 import (
 	"fmt"
+	"log"
 
 	"github.com/soundreaper/portal/config"
+	"gorm.io/driver/postgres"
+	"gorm.io/gorm"
+	"gorm.io/gorm/logger"
 )
 
-func GetMySQLConnectionString() string {
+func Connect() *gorm.DB {
 	// get db config from environment
-	config := config.GetConfig()
+	dbConfig := config.GetDBConfig()
 
-	dataBase := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8mb4&parseTime=True&loc=Local",
-		config.DbUsername,
-		config.DbPassword,
-		config.DbHost,
-		config.DbPort,
-		config.DbName)
+	database := getConnection(dbConfig)
 
-	return dataBase
+	err := database.AutoMigrate()
+	if err != nil {
+		log.Fatal("db: error migrating models. err: ", err)
+	}
+
+	return database
+}
+
+func getConnection(c *config.DBConfiguration) *gorm.DB {
+	connString := fmt.Sprintf("user=%s password=%s dbname=%s port=%s host=%s sslmode=disable", c.Username, c.Password, c.DBName, c.Port, c.Host)
+
+	db, err := gorm.Open(postgres.Open(connString), &gorm.Config{
+		Logger: logger.Default.LogMode(logger.Silent),
+	})
+
+	if err != nil {
+		log.Fatalf("DB Connection Error: %v", err)
+	}
+
+	return db
 }
