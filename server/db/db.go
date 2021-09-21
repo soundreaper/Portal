@@ -5,6 +5,7 @@ import (
 	"log"
 
 	"github.com/soundreaper/portal/config"
+	"github.com/soundreaper/portal/models"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
@@ -16,7 +17,7 @@ func Connect() *gorm.DB {
 
 	database := getConnection(dbConfig)
 
-	err := database.AutoMigrate()
+	err := database.AutoMigrate(models.Image{})
 	if err != nil {
 		log.Fatal("db: error migrating models. err: ", err)
 	}
