@@ -1,21 +1,25 @@
 package handlers
 
 import (
+	"log"
 	"net/http"
 
 	"github.com/labstack/echo/v4"
-	"github.com/soundreaper/portal/models"
 	"github.com/soundreaper/portal/auth"
+	"github.com/soundreaper/portal/models"
 )
 
 // GetUser is the handler for getting a user
 func (h *Handler) GetUser(c echo.Context) error {
-	// need to find some way to get a user ID via auth from context
-
+	// Grab user ID using helper function in auth
+	userID, err := auth.GetUserIDFromContext(c)
+	if err != nil {
+		return echo.NewHTTPError(http.StatusInternalServerError, err.Error())
+	}
 	// setup user store
 	store := models.NewUserStore(h.db)
 	// get the user with given ID
-	user, err := store.GetByID()
+	user, err := store.GetByID(userID)
 	if err != nil {
 		return echo.NewHTTPError(http.StatusBadRequest, err)
 	}
@@ -25,8 +29,11 @@ func (h *Handler) GetUser(c echo.Context) error {
 
 // CreateUser is the handler for creating a new user with the passed body
 func (h *Handler) CreateUser(c echo.Context) error {
-	// need to find some way to get a user ID via auth from context
-
+	// Grab user ID using helper function in auth
+	userID, err := auth.GetUserIDFromContext(c)
+	if err != nil {
+		return echo.NewHTTPError(http.StatusInternalServerError, err.Error())
+	}
 	// setup user store
 	store := models.NewUserStore(h.db)
 	// create new user object to bind body to
@@ -38,14 +45,14 @@ func (h *Handler) CreateUser(c echo.Context) error {
 		return echo.NewHTTPError(http.StatusBadRequest, "bad body data")
 	}
 	// check to see if the user already exists, no dupes!
-	user, _ := store.GetByID()
+	user, _ := store.GetByID(userID)
 	if user.ID != "" {
-		log.Printf("user details for the id %s already exists\n", )
+		log.Printf("user details for the id %s already exists\n", userID)
 		return echo.NewHTTPError(http.StatusBadRequest, "unauthorized")
 	}
 
 	// set user ID to ID attached to auth from context
-	u.ID :=
+	u.ID = userID
 
 	// save user to the database
 	user, err = store.Create(u)
@@ -59,12 +66,16 @@ func (h *Handler) CreateUser(c echo.Context) error {
 
 // DeleteUser is the handler for deleting a user given the user ID
 func (h *Handler) DeleteUser(c echo.Context) error {
-	// need to find some way to get a user ID via auth from context
+	// Grab user ID using helper function in auth
+	userID, err := auth.GetUserIDFromContext(c)
+	if err != nil {
+		return echo.NewHTTPError(http.StatusInternalServerError, err.Error())
+	}
 
 	// setup user store
 	store := models.NewUserStore(h.db)
 	// delete the user with given ID
-	_, err := store.DeleteByID()
+	_, err = store.DeleteByID(userID)
 	if err != nil {
 		return echo.NewHTTPError(http.StatusBadRequest, "failed to delete user")
 	}
