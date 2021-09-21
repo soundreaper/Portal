@@ -3,11 +3,13 @@ package server
 import (
 	"encoding/json"
 	"errors"
+	"fmt"
 	"log"
 	"net/http"
 
 	jwtmiddleware "github.com/auth0/go-jwt-middleware"
 	"github.com/form3tech-oss/jwt-go"
+	"github.com/soundreaper/portal/config"
 )
 
 // Jwks represents an array of json web keys
@@ -43,8 +45,13 @@ func getJwtMiddleware() jwtmiddleware.JWTMiddleware {
 
 // getPemCert will get the pem certificate from the API
 func getPemCert(token *jwt.Token) (string, error) {
+	// Auth0 API information is pulled via the auth config function
+	c := config.GetAuthConfig()
 	cert := ""
-	resp, err := http.Get("https://YOUR_DOMAIN/.well-known/jwks.json")
+
+	// Create url using the Auth0 ID pulled from config function
+	url := fmt.Sprintf("%s/.well-known/jwks.json", c.Auth0ID)
+	resp, err := http.Get(url)
 
 	if err != nil {
 		return cert, err
