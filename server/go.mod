@@ -3,6 +3,11 @@ module github.com/soundreaper/portal
 go 1.17
 
 require (
+	github.com/auth0/go-jwt-middleware v1.0.1
+	github.com/aws/aws-sdk-go v1.40.46
+	github.com/form3tech-oss/jwt-go v3.2.2+incompatible
+	github.com/golang-jwt/jwt v3.2.2+incompatible
+	github.com/google/uuid v1.3.0
 	github.com/joho/godotenv v1.3.0
 	github.com/labstack/echo/v4 v4.6.0
 	gorm.io/driver/postgres v1.1.1
@@ -10,11 +15,6 @@ require (
 )
 
 require (
-	github.com/auth0/go-jwt-middleware v1.0.1 // indirect
-	github.com/aws/aws-sdk-go v1.40.46 // indirect
-	github.com/form3tech-oss/jwt-go v3.2.2+incompatible // indirect
-	github.com/golang-jwt/jwt v3.2.2+incompatible // indirect
-	github.com/google/uuid v1.3.0 // indirect
 	github.com/jackc/chunkreader/v2 v2.0.1 // indirect
 	github.com/jackc/pgconn v1.10.0 // indirect
 	github.com/jackc/pgio v1.0.0 // indirect
