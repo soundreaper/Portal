@@ -8,5 +8,5 @@ services:
       - 5432:5432
     environment:
       POSTGRE_DB: portal
-      POSTGRES_USER: ${DB_USERNAME}
-      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: APowerfulPassword1234
