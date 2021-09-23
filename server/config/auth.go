@@ -6,14 +6,14 @@ import (
 
 // AuthConfiguration represents the values needed for auth configuration
 type AuthConfiguration struct {
-	Auth0Domain string
-	Auth0ID     string
+	GoogleKey    string
+	GoogleSecret string
 }
 
 // GetAuthConfig will return the default auth configuration
 func GetAuthConfig() *AuthConfiguration {
 	return &AuthConfiguration{
-		Auth0Domain: os.Getenv("AUTH0_DOMAIN"),
-		Auth0ID:     os.Getenv("AUTH0_API_ID"),
+		GoogleKey:    os.Getenv("GOOGLE_KEY"),
+		GoogleSecret: os.Getenv("GOOGLE_SECRET"),
 	}
 }

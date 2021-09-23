@@ -5,7 +5,7 @@ const base = process.env.REACT_APP_BACKEND_URL;
 
 const GetAxiosInstance = token => {
   const instance = axios.create({
-    baseURL: base + '/api/v1', // example: http://localhost:8080/api/v1
+    baseURL: base + '/api/v1', // example: http://localhost:8000/api/v1
     // add the token for authentication
     headers: {
       Authorization: `Bearer ${token}`,
