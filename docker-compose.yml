@@ -2,7 +2,7 @@ version: '3'
 services:
   postgres:
     image: postgres:latest
-    restart: unless-stopped
+    restart: always
     container_name: postgres
     ports:
       - 5432:5432
@@ -10,3 +10,8 @@ services:
       POSTGRE_DB: portal
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: APowerfulPassword1234
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - "8080:8080"
